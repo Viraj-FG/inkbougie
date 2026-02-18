@@ -4,721 +4,739 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INK BOUGIE — Official Site</title>
-    <meta name="description" content="INK BOUGIE — Isaac Kabuchi. Official website. Music, visuals, shows, and merch.">
+    <meta name="description" content="INK BOUGIE — Isaac Kabuchi. Official website. Music, visuals, shows.">
     <meta property="og:title" content="INK BOUGIE — Official">
     <meta property="og:description" content="Music. Visuals. Culture. The official home of Ink Bougie.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://inkbougie.com">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#000000">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🖋️</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F4D03F;
-            --dark: #0a0a0a;
-            --darker: #050505;
-            --text: #e8e8e8;
-            --text-dim: #888;
-            --accent: #D4AF37;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--dark);
-            color: var(--text);
+            background: #000;
+            color: #fff;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== LOADER ===== */
-        .loader {
+        /* ===== SPLASH / LANDING ===== */
+        .splash {
             position: fixed;
             inset: 0;
-            background: var(--darker);
             z-index: 9999;
+            background: #000;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s, visibility 0.6s;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
-        .loader.hidden { opacity: 0; visibility: hidden; }
-        .loader-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3rem, 10vw, 8rem);
-            color: var(--gold);
-            letter-spacing: 0.3em;
-            animation: pulse 1.5s ease-in-out infinite;
+        .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .splash-hero {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+        .splash-hero img {
+            width: 100%;
+            display: block;
+        }
+        .splash-hero .overlay-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+        .splash-hero .overlay-text h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+        }
+        .splash-hero .overlay-text .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-top: 0.4rem;
         }
 
+        .splash-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 320px;
+            padding: 0 1.5rem;
+        }
+        .splash-btn {
+            display: block;
+            text-align: center;
+            padding: 0.9rem 2rem;
+            border: 2px solid #fff;
+            border-radius: 30px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            cursor: pointer;
+            background: transparent;
+        }
+        .splash-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ===== MAIN SITE ===== */
+        .site { display: none; }
+        .site.active { display: block; }
+
         /* ===== NAV ===== */
-        nav {
+        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 100;
-            padding: 1.5rem 3rem;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            justify-content: space-between;
+            height: 60px;
         }
-        nav.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-        }
-        .logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 0.2em;
-            color: var(--gold);
+        .nav-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
             text-decoration: none;
         }
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
         }
         .nav-links a {
-            color: var(--text);
+            color: #999;
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
+            transition: color 0.2s;
         }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--gold);
-            transition: width 0.3s;
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: #fff; }
 
         .hamburger {
             display: none;
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            z-index: 101;
+            background: none;
+            border: none;
+            padding: 4px;
         }
         .hamburger span {
-            width: 25px;
+            width: 22px;
             height: 2px;
-            background: var(--gold);
+            background: #fff;
             transition: 0.3s;
         }
 
         /* ===== HERO ===== */
         .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
             position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
             overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(212,175,55,0.08) 0%, transparent 70%);
-            z-index: 1;
         }
         .hero-bg {
             position: absolute;
             inset: 0;
-            background: 
-                linear-gradient(180deg, rgba(10,10,10,0.3) 0%, var(--dark) 100%),
-                url('hero.png') center/cover no-repeat;
+            background: url('hero.png') center top / cover no-repeat;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.1) 0%,
+                rgba(0,0,0,0.2) 40%,
+                rgba(0,0,0,0.85) 80%,
+                #000 100%
+            );
         }
         .hero-content {
             position: relative;
             z-index: 2;
+            padding: 0 3rem 5rem;
+            max-width: 900px;
         }
-        .hero-label {
-            font-size: 0.75rem;
-            letter-spacing: 0.4em;
+        .hero-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
+            color: #D4AF37;
+            margin-bottom: 0.75rem;
             font-weight: 500;
         }
-        .hero-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4rem, 15vw, 12rem);
-            line-height: 0.9;
-            letter-spacing: 0.05em;
-            color: var(--text);
-            margin-bottom: 1.5rem;
+        .hero-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 1rem;
         }
-        .hero-name span {
-            display: block;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero-sub {
+            font-size: 0.85rem;
+            color: #aaa;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
         }
-        .hero-tagline {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            color: var(--text-dim);
-            margin-bottom: 3rem;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-        .hero-cta {
+        .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
+            justify-content: center;
+            padding: 0.85rem 2.2rem;
+            border: 2px solid #fff;
+            border-radius: 30px;
+            color: #fff;
             text-decoration: none;
+            font-family: 'Oswald', sans-serif;
             font-size: 0.8rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
             font-weight: 600;
-            transition: all 0.3s;
-        }
-        .hero-cta:hover {
-            background: var(--gold);
-            color: var(--darker);
-        }
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-dim);
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            animation: float 2s ease-in-out infinite;
+            transition: all 0.25s;
+            background: transparent;
         }
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-8px); }
+        .btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        .btn-filled {
+            background: #fff;
+            color: #000;
+        }
+        .btn-filled:hover {
+            background: transparent;
+            color: #fff;
         }
 
-        /* ===== SECTIONS ===== */
-        section {
-            padding: 6rem 3rem;
+        /* ===== DISCOGRAPHY ===== */
+        .section {
+            padding: 5rem 3rem;
             max-width: 1200px;
             margin: 0 auto;
         }
-        .section-label {
-            font-size: 0.65rem;
-            letter-spacing: 0.4em;
+        .section-heading {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 0.75rem;
-        }
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            letter-spacing: 0.05em;
-            margin-bottom: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #fff;
         }
 
-        /* ===== MUSIC ===== */
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        .disco-scroll {
+            display: flex;
             gap: 1.5rem;
-            margin-top: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1rem;
+            scrollbar-width: none;
         }
-        .track-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 4px;
-            overflow: hidden;
-            transition: all 0.3s;
+        .disco-scroll::-webkit-scrollbar { display: none; }
+
+        .disco-card {
+            flex: 0 0 260px;
+            scroll-snap-align: start;
             cursor: pointer;
+            transition: transform 0.3s;
         }
-        .track-card:hover {
-            border-color: rgba(212,175,55,0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .track-art {
+        .disco-card:hover { transform: scale(1.03); }
+        .disco-art {
             width: 100%;
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
             position: relative;
         }
-        .track-art::after {
-            content: '▶';
-            position: absolute;
-            font-size: 2rem;
-            color: var(--gold);
-            opacity: 0;
-            transition: opacity 0.3s;
+        .disco-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
-        .track-card:hover .track-art::after { opacity: 1; }
-        .track-info {
-            padding: 1.25rem;
+        .disco-year {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.75rem;
+            letter-spacing: 0.1em;
         }
-        .track-title {
+        .disco-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-        .track-meta {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-        .track-badge {
-            display: inline-block;
-            font-size: 0.6rem;
-            letter-spacing: 0.15em;
             text-transform: uppercase;
-            padding: 0.25rem 0.5rem;
-            background: rgba(212,175,55,0.15);
-            color: var(--gold);
-            border-radius: 2px;
-            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+
+        /* ===== PLAYER / SOUNDCLOUD ===== */
+        .player-section {
+            background: #0a0a0a;
+            padding: 4rem 3rem;
+        }
+        .player-wrap {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .player-wrap iframe {
+            border-radius: 0;
         }
 
         /* ===== ABOUT ===== */
-        .about-content {
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
-        .about-image {
+        .about-img {
+            width: 100%;
             aspect-ratio: 3/4;
-            background: url('artist.png') center/cover no-repeat;
-            border: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
         }
-        .about-image::before {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border: 1px solid rgba(212,175,55,0.15);
+        .about-text .label {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #D4AF37;
+            margin-bottom: 1rem;
         }
-        .about-text p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--text-dim);
+        .about-text h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
             margin-bottom: 1.5rem;
         }
-        .about-text p:first-of-type::first-letter {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            float: left;
-            line-height: 1;
-            margin-right: 0.5rem;
-            color: var(--gold);
-        }
-
-        /* ===== VISUALS ===== */
-        .visuals-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-        .visual-item {
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #1a1a1a, #222);
-            border: 1px solid rgba(255,255,255,0.04);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .visual-item:hover {
-            border-color: rgba(212,175,55,0.3);
-        }
-        .visual-item::after {
-            content: '▶';
-            font-size: 2rem;
-            color: var(--gold);
-            opacity: 0;
-            transition: 0.3s;
-        }
-        .visual-item:hover::after { opacity: 1; }
-        .visual-item:first-child {
-            grid-column: span 2;
-            grid-row: span 2;
+        .about-text p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #999;
+            margin-bottom: 1.25rem;
         }
 
         /* ===== SHOWS ===== */
-        .show-item {
+        .shows-section {
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .show-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 1.5rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            transition: 0.3s;
+            gap: 2rem;
+            transition: padding-left 0.2s;
         }
-        .show-item:hover {
-            padding-left: 1rem;
-            border-color: rgba(212,175,55,0.2);
-        }
+        .show-row:hover { padding-left: 1rem; }
         .show-date {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-            min-width: 120px;
-        }
-        .show-venue {
-            flex: 1;
-        }
-        .show-venue .name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
             font-weight: 600;
-        }
-        .show-venue .city {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-        .show-tickets {
-            padding: 0.6rem 1.5rem;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
+            color: #D4AF37;
+            min-width: 100px;
             text-transform: uppercase;
-            transition: 0.3s;
         }
-        .show-tickets:hover {
-            background: var(--gold);
-            color: var(--darker);
-        }
-
-        /* ===== STREAMING LINKS ===== */
-        .stream-section {
-            text-align: center;
-            padding: 6rem 3rem;
-            background: linear-gradient(180deg, var(--dark), rgba(212,175,55,0.03), var(--dark));
-        }
-        .stream-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .stream-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 4px;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.85rem;
+        .show-info { flex: 1; }
+        .show-info .venue {
             font-weight: 500;
-            transition: all 0.3s;
+            font-size: 0.95rem;
         }
-        .stream-link:hover {
-            border-color: var(--gold);
-            background: rgba(212,175,55,0.08);
-            transform: translateY(-2px);
+        .show-info .city {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.15rem;
         }
-        .stream-icon {
-            font-size: 1.5rem;
+        .show-btn {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid #fff;
+            border-radius: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .show-btn:hover {
+            background: #fff;
+            color: #000;
         }
 
-        /* ===== CONTACT ===== */
-        .contact-section {
+        /* ===== MAILING LIST ===== */
+        .mailing {
+            padding: 5rem 3rem;
             text-align: center;
-            padding: 6rem 3rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
         }
-        .contact-email {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            letter-spacing: 0.1em;
-        }
-        .contact-email a {
-            color: var(--gold);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(212,175,55,0.3);
-            transition: 0.3s;
-        }
-        .contact-email a:hover {
-            border-color: var(--gold);
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .social-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.75rem;
+        .mailing h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            transition: color 0.3s;
+            margin-bottom: 0.5rem;
         }
-        .social-links a:hover { color: var(--gold); }
+        .mailing p {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .mail-form {
+            display: flex;
+            gap: 0;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .mail-form input {
+            flex: 1;
+            padding: 0.85rem 1.25rem;
+            border: 2px solid #333;
+            border-right: none;
+            border-radius: 30px 0 0 30px;
+            background: transparent;
+            color: #fff;
+            font-size: 0.85rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .mail-form input::placeholder { color: #555; }
+        .mail-form input:focus { border-color: #D4AF37; }
+        .mail-form button {
+            padding: 0.85rem 2rem;
+            border: 2px solid #333;
+            border-left: none;
+            border-radius: 0 30px 30px 0;
+            background: #fff;
+            color: #000;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .mail-form button:hover { background: #D4AF37; }
 
         /* ===== FOOTER ===== */
         footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 0.15em;
+            padding: 2rem 3rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
+        .footer-copy {
+            font-size: 0.65rem;
+            color: #444;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #fff; }
 
-        /* ===== GOLD LINE DIVIDER ===== */
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: var(--gold);
-            margin: 0 auto 2rem;
+        /* ===== ARROW NAV ===== */
+        .scroll-arrows {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .scroll-arrow {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: none;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+        .scroll-arrow:hover {
+            border-color: #fff;
+            background: rgba(255,255,255,0.05);
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            nav { padding: 1rem 1.5rem; }
-            .nav-links { 
+            .navbar { padding: 0 1.25rem; }
+            .nav-links {
                 display: none;
                 position: fixed;
                 inset: 0;
-                background: rgba(5,5,5,0.98);
+                background: rgba(0,0,0,0.97);
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                gap: 2rem;
+                gap: 2.5rem;
+                z-index: 200;
             }
             .nav-links.open { display: flex; }
-            .hamburger { display: flex; }
-            section { padding: 4rem 1.5rem; }
-            .about-content { grid-template-columns: 1fr; gap: 2rem; }
-            .visuals-grid { grid-template-columns: 1fr; }
-            .visual-item:first-child { grid-column: span 1; grid-row: span 1; }
-            .show-item { flex-wrap: wrap; gap: 0.5rem; }
-            .stream-links { flex-direction: column; align-items: center; }
+            .nav-links a { font-size: 1rem; color: #fff; }
+            .hamburger { display: flex; z-index: 201; }
+
+            .hero-content { padding: 0 1.5rem 4rem; }
+            .section { padding: 3.5rem 1.5rem; }
+            .player-section { padding: 3rem 1.5rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .show-row { flex-wrap: wrap; gap: 0.75rem; }
+            .disco-card { flex: 0 0 200px; }
+            .mailing { padding: 3.5rem 1.5rem; }
+            .mail-form { flex-direction: column; }
+            .mail-form input {
+                border-right: 2px solid #333;
+                border-radius: 30px;
+                margin-bottom: 0.75rem;
+            }
+            .mail-form button {
+                border-left: 2px solid #333;
+                border-radius: 30px;
+            }
+            footer { padding: 1.5rem; flex-direction: column; text-align: center; }
+            .splash-hero { max-width: 90%; }
         }
 
-        /* ===== ANIMATIONS ===== */
-        .fade-in {
+        /* ===== FADE IN ===== */
+        .fade-up {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s, transform 0.8s;
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
-        .fade-in.visible {
+        .fade-up.visible {
             opacity: 1;
             transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- Loader -->
-    <div class="loader" id="loader">
-        <div class="loader-text">INK BOUGIE</div>
-    </div>
 
-    <!-- Navigation -->
-    <nav id="nav">
-        <a href="#" class="logo">INK BOUGIE</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#music">Music</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#visuals">Visuals</a></li>
-            <li><a href="#shows">Shows</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-label">The Official Site</div>
-            <h1 class="hero-name"><span>INK</span>BOUGIE</h1>
-            <p class="hero-tagline">Where the pen meets the pulse</p>
-            <a href="#music" class="hero-cta">Listen Now →</a>
-        </div>
-        <div class="scroll-indicator">
-            Scroll<br>↓
-        </div>
-    </section>
-
-    <!-- Music -->
-    <section id="music" class="fade-in">
-        <div class="section-label">Discography</div>
-        <h2 class="section-title">THE MUSIC</h2>
-        
-        <!-- SoundCloud Embed -->
-        <div style="margin-bottom: 2rem;">
-            <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
-                src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fusers%2F293489749&show_artwork=true&color=%23D4AF37&hide_related=true&show_comments=false&show_user=true&show_reposts=false"
-                style="border-radius: 4px;">
-            </iframe>
-        </div>
-
-        <div class="music-grid">
-            <div class="track-card">
-                <div class="track-art">🎵</div>
-                <div class="track-info">
-                    <div class="track-title">Latest Single</div>
-                    <div class="track-meta">2026 · Single</div>
-                    <div class="track-badge">New Release</div>
-                </div>
-            </div>
-            <div class="track-card">
-                <div class="track-art">💿</div>
-                <div class="track-info">
-                    <div class="track-title">Debut EP</div>
-                    <div class="track-meta">Coming Soon</div>
-                    <div class="track-badge">Pre-Save</div>
-                </div>
-            </div>
-            <div class="track-card">
-                <div class="track-art">🔥</div>
-                <div class="track-info">
-                    <div class="track-title">Freestyle Sessions</div>
-                    <div class="track-meta">Mixtape · 2025</div>
-                </div>
+    <!-- ===== SPLASH LANDING (like Travis) ===== -->
+    <div class="splash" id="splash">
+        <div class="splash-hero">
+            <img src="hero.png" alt="Ink Bougie">
+            <div class="overlay-text">
+                <h1>INK BOUGIE</h1>
+                <div class="subtitle">Where the pen meets the pulse</div>
             </div>
         </div>
-    </section>
-
-    <!-- Streaming -->
-    <div class="stream-section fade-in">
-        <div class="section-label">Stream Everywhere</div>
-        <h2 class="section-title" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem);">FIND INK BOUGIE ON</h2>
-        <div class="divider"></div>
-        <div class="stream-links">
-            <a href="#" class="stream-link" target="_blank">
-                <span class="stream-icon">🟢</span> Spotify
-            </a>
-            <a href="#" class="stream-link" target="_blank">
-                <span class="stream-icon">🍎</span> Apple Music
-            </a>
-            <a href="https://soundcloud.com/206buchi" class="stream-link" target="_blank">
-                <span class="stream-icon">☁️</span> SoundCloud
-            </a>
-            <a href="#" class="stream-link" target="_blank">
-                <span class="stream-icon">▶️</span> YouTube Music
-            </a>
-            <a href="#" class="stream-link" target="_blank">
-                <span class="stream-icon">🟠</span> Audiomack
-            </a>
-            <a href="#" class="stream-link" target="_blank">
-                <span class="stream-icon">🎵</span> Tidal
-            </a>
+        <div class="splash-buttons">
+            <a href="https://soundcloud.com/206buchi" target="_blank" class="splash-btn">Stream Now</a>
+            <button class="splash-btn" onclick="enterSite()">Enter Site</button>
         </div>
     </div>
 
-    <!-- About -->
-    <section id="about" class="fade-in">
-        <div class="about-content">
-            <div class="about-image"></div>
-            <div class="about-text">
-                <div class="section-label">The Artist</div>
-                <h2 class="section-title">ABOUT INK BOUGIE</h2>
-                <p>Isaac Kabuchi writes with the weight of lived experience and the precision of someone who respects the craft. Under the name Ink Bougie, he bridges raw street narratives with polished, intentional wordplay — bougie in delivery, unfiltered in content.</p>
-                <p>Every bar is ink on paper before it's sound in your speakers. The pen comes first. The studio comes second. The result speaks for itself.</p>
+    <!-- ===== MAIN SITE ===== -->
+    <div class="site" id="site">
+
+        <!-- Nav -->
+        <nav class="navbar">
+            <a href="#" class="nav-logo">Ink Bougie</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#music">Music</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#shows">Live</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="hero-tag">New Music</div>
+                <h1 class="hero-title">INK<br>BOUGIE</h1>
+                <div class="hero-sub">Pen first. Studio second.</div>
+                <div class="hero-buttons">
+                    <a href="https://soundcloud.com/206buchi" target="_blank" class="btn btn-filled">Stream Now</a>
+                    <a href="#music" class="btn">Explore</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discography Carousel -->
+        <div class="section" id="music">
+            <div class="section-heading">Discography</div>
+            <div class="disco-scroll" id="discoScroll">
+                <div class="disco-card">
+                    <div class="disco-art">
+                        <img src="artist.png" alt="Latest Release">
+                    </div>
+                    <div class="disco-year">2026</div>
+                    <div class="disco-title">Latest Release</div>
+                </div>
+                <div class="disco-card">
+                    <div class="disco-art">
+                        <img src="hero.png" alt="Debut EP">
+                    </div>
+                    <div class="disco-year">Coming Soon</div>
+                    <div class="disco-title">Debut EP</div>
+                </div>
+                <div class="disco-card">
+                    <div class="disco-art">
+                        <img src="artist.png" alt="Freestyle Sessions">
+                    </div>
+                    <div class="disco-year">2025</div>
+                    <div class="disco-title">Freestyle Sessions</div>
+                </div>
+                <div class="disco-card">
+                    <div class="disco-art">
+                        <img src="hero.png" alt="Unreleased">
+                    </div>
+                    <div class="disco-year">TBA</div>
+                    <div class="disco-title">Unreleased</div>
+                </div>
+            </div>
+            <div class="scroll-arrows">
+                <button class="scroll-arrow" onclick="scrollDisco(-1)">‹</button>
+                <button class="scroll-arrow" onclick="scrollDisco(1)">›</button>
             </div>
         </div>
-    </section>
 
-    <!-- Visuals -->
-    <section id="visuals" class="fade-in">
-        <div class="section-label">Watch</div>
-        <h2 class="section-title">VISUALS</h2>
-        <div class="visuals-grid">
-            <div class="visual-item">🎬</div>
-            <div class="visual-item">📹</div>
-            <div class="visual-item">🎥</div>
-            <div class="visual-item">📷</div>
-        </div>
-    </section>
-
-    <!-- Shows -->
-    <section id="shows" class="fade-in">
-        <div class="section-label">Live</div>
-        <h2 class="section-title">UPCOMING SHOWS</h2>
-        <div class="show-item">
-            <div class="show-date">TBA</div>
-            <div class="show-venue">
-                <div class="name">Dates Coming Soon</div>
-                <div class="city">Stay tuned for live performances</div>
+        <!-- SoundCloud Player -->
+        <div class="player-section fade-up">
+            <div class="player-wrap">
+                <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay"
+                    src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fusers%2F293489749&show_artwork=true&color=%23D4AF37&hide_related=true&show_comments=false&show_user=true&show_reposts=false">
+                </iframe>
             </div>
-            <a href="#contact" class="show-tickets">Book Ink Bougie</a>
         </div>
-    </section>
 
-    <!-- Contact -->
-    <div class="contact-section fade-in" id="contact">
-        <div class="section-label">Get In Touch</div>
-        <h2 class="section-title" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem);">BOOKINGS & INQUIRIES</h2>
-        <div class="divider"></div>
-        <div class="contact-email">
-            <a href="mailto:booking@inkbougie.com">booking@inkbougie.com</a>
+        <!-- About -->
+        <div class="section fade-up" id="about">
+            <div class="about-grid">
+                <img src="artist.png" alt="Ink Bougie" class="about-img">
+                <div class="about-text">
+                    <div class="label">The Artist</div>
+                    <h2>Isaac Kabuchi</h2>
+                    <p>Isaac Kabuchi writes with the weight of lived experience and the precision of someone who respects the craft. Under the name Ink Bougie, he bridges raw street narratives with polished, intentional wordplay — bougie in delivery, unfiltered in content.</p>
+                    <p>Every bar is ink on paper before it's sound in your speakers. The pen comes first. The studio comes second. The result speaks for itself.</p>
+                    <a href="https://soundcloud.com/206buchi" target="_blank" class="btn" style="margin-top: 1rem;">Listen on SoundCloud</a>
+                </div>
+            </div>
         </div>
-        <div class="social-links">
-            <a href="https://soundcloud.com/206buchi" target="_blank">SoundCloud</a>
-            <a href="https://www.instagram.com/__inkbougie" target="_blank">Instagram</a>
-            <a href="#" target="_blank">Twitter / X</a>
-            <a href="#" target="_blank">TikTok</a>
-            <a href="#" target="_blank">YouTube</a>
+
+        <!-- Live / Shows -->
+        <div class="section shows-section fade-up" id="shows">
+            <div class="section-heading">Live</div>
+            <div class="show-row">
+                <div class="show-date">TBA</div>
+                <div class="show-info">
+                    <div class="venue">Upcoming Shows</div>
+                    <div class="city">Dates announced soon — stay tuned</div>
+                </div>
+                <a href="#contact" class="show-btn">Book Ink Bougie</a>
+            </div>
         </div>
+
+        <!-- Mailing List -->
+        <div class="mailing fade-up" id="contact">
+            <h2>Sign up to the Ink Bougie mailing list</h2>
+            <p>Be the first to know about new music, shows, and drops</p>
+            <form class="mail-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='SIGNED UP ✓';">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-copy">© 2026 Ink Bougie. All Rights Reserved.</div>
+            <div class="footer-links">
+                <a href="https://soundcloud.com/206buchi" target="_blank">SoundCloud</a>
+                <a href="https://www.instagram.com/__inkbougie" target="_blank">Instagram</a>
+                <a href="mailto:booking@inkbougie.com">Contact</a>
+            </div>
+        </footer>
+
     </div>
-
-    <!-- Footer -->
-    <footer>
-        © 2026 INK BOUGIE. ALL RIGHTS RESERVED.
-    </footer>
 
     <script>
-        // Loader
-        window.addEventListener('load', () => {
-            setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200);
-        });
-
-        // Nav scroll
-        window.addEventListener('scroll', () => {
-            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-        });
+        // Enter site from splash
+        function enterSite() {
+            document.getElementById('splash').classList.add('hidden');
+            document.getElementById('site').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('splash').style.display = 'none';
+            }, 800);
+        }
 
         // Mobile menu
         function toggleMenu() {
@@ -728,20 +746,26 @@
             a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
         });
 
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Smooth scroll for CTA
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
-                const target = document.querySelector(a.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth' });
             });
         });
+
+        // Disco scroll
+        function scrollDisco(dir) {
+            const el = document.getElementById('discoScroll');
+            el.scrollBy({ left: dir * 280, behavior: 'smooth' });
+        }
+
+        // Fade-in observer
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
     </script>
 </body>
 </html>
